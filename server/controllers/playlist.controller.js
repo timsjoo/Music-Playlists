@@ -1,5 +1,6 @@
 const Playlist = require('../models/playlist');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
 
 module.exports = {
 
