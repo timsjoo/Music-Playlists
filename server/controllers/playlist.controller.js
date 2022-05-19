@@ -1,6 +1,7 @@
 const Playlist = require('../models/playlist');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 
 module.exports = {
 
@@ -33,10 +34,19 @@ module.exports = {
       })
   },
 
-  // Will finish once I have models
-  // getAllPlaylistsByUserId: (req, res) => {
-  //   Playlist.find({userId: req.params.userId}) // Probably will have to change this depending on what we name the attribute for the model
-  // }
+  getAllPlaylistsByUserId: (req, res) => {
+    Playlist.find({createdBy: mongoose.Types.ObjectId(req.params.id)})
+      .then((playlist) => {
+        console.log(playlist)
+        res.json(playlist)
+      })
+      .catch((err)=> {
+        res.json({
+          message: "Something went wrong: getAllPlaylistsByUserId",
+          error: err
+        })
+      })
+  },
 
   createPlaylist: (req, res) => {
     const newPlaylistObject = new Playlist(req.body);
@@ -51,6 +61,7 @@ module.exports = {
         newPlaylist
           .populate("createdBy", "username email" )
           .then((newPlaylist) => {
+            const {createdBy} = newPlaylist
             console.log("createPlaylist", {newPlaylist, createdBy}); // debugging
             res.json(newPlaylist)
           })
@@ -62,7 +73,7 @@ module.exports = {
   },
 
   updatePlaylist: (req, res) => {
-    Playlist.findOneAndUpdate({_id: req.paramd.id}, req.body, {
+    Playlist.findOneAndUpdate({_id: req.params.id}, req.body, {
       new: true,
       runValidators: true,
     })
