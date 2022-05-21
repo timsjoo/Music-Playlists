@@ -1,6 +1,6 @@
 import './App.css';
-//import AllPlaylists from "./components/AllPlaylists";
-//import NewPlaylist from "./components/NewPlaylist";
+import AllPlaylists from "./components/AllPlaylists";
+import NewPlaylist from "./components/NewPlaylist";
 //import OnePlaylist from "./components/OnePlaylist";
 //import EditPlaylist from "./components/EditPlaylist";
 import LoginReg from "./views/LoginReg";
@@ -20,6 +20,10 @@ function App() {
 
       <Routes>
         <Route element = {<LoginReg />} path= "/" />
+        <Route element = {<AllPlaylists />} path= "/home" />
+        <Route element = {<NewPlaylist />} path= "/new" />
+
+
         
 
       </Routes>
