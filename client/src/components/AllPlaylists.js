@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../App.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const AllPlaylists = (props) => {  
@@ -73,6 +73,11 @@ const AllPlaylists = (props) => {
             <div className="container">
 
                 <nav className="navbar navbar-expand-sm my-3 navbar-light bg-light">
+                    <div className="container-fluid">
+                        <span className="navbar-text">
+                        <p>Welcome {user.username}</p>
+                        </span>
+                    </div>
                     <form className="container-fluid justify-content-end">
                         <button className="btn btn-outline-success me-2" type="button" onClick = {() => navigate (`/new`)}>Add New Playlist</button>
                         <button className="btn  btn-outline-success me-2" type="button" onClick = {logout}>Logout</button>
@@ -99,7 +104,7 @@ const AllPlaylists = (props) => {
                             </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody >
                             {playlistList.map((playlist, index) => {
                                 return (
                                     <tr key={index}>
@@ -114,7 +119,7 @@ const AllPlaylists = (props) => {
 
                                         <td>
 
-                                                <div className="btn-group mt-5">
+                                                <div className="btn-group my-1">
 
                                                     <button className="btn btn-outline-success me-2" type="button" onClick = {() => navigate (`/playlist/${playlist._id}`)}>Add Songs</button>
 
