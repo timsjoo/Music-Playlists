@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 
 const Login = (props) => {
     const [email, setEmail] = useState("");
+    
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Login = (props) => {
             .post(
                 "http://localhost:8000/api/users/login", 
                 {
+                    
                     email: email,
                     password: password,
                 },
@@ -26,7 +28,7 @@ const Login = (props) => {
                 console.log(res);
                 console.log(res.data);
                 
-                navigate("/home"); ////////???
+                navigate("/home"); 
             
             })
             .catch((err) => {
