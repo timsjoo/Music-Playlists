@@ -1,46 +1,59 @@
 import axios from "axios";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-const CreatePlaylist = () => {
+const EditPlaylist = (props) => {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [genre, setGenre] = useState("");
+    //const [songList, setSongList] = useState([]);
 
     const [user, setUser] = useState({});
 
     const [errors, setErrors] = useState({});
+    const { id } = useParams();
+
     const navigate = useNavigate();
+    
 
 
-    const handleAddPlaylist = (e) => {
+    useEffect(() => {
+        axios.get(`http://localhost:8000/api/playlists/${id}`)
+            .then((res) =>{
+                console.log(res);
+                console.log(res.data);
+                setName(res.data.name);
+                setDescription(res.data.description);
+                setGenre(res.data.genre);
+
+            })
+            .catch((err) => console.log(err))
+        }, [id])
+
+        const handleEditPlaylist = (e) => {
         e.preventDefault();
-        console.log({
+        axios.put(`http://localhost:8000/api/playlists/${id}`,
+
+        {
             name: name,
             description: description,
             genre: genre,
-
+        })
+        .then((response) => {
+            console.log("Edit success ", response);
+            
+            navigate("/home")
+        })
+        .catch((err) => {
+            console.log("error with editing playlist", err.response);
+            
+            setErrors(err.response.data.errors);
         });
+    }
 
-        axios.post("http://localhost:8000/api/playlists", {
-            name: name,
-            description: description,
-            genre: genre
+       //{ withCredentials: true }
 
-        },
-            { withCredentials: true }
-        )
-            .then((response) => {
-                console.log("Playlist added", response);
-                navigate("/home")
-            })
-
-            .catch((err) => {
-                console.log("error with playlist adding", err.response);
-                setErrors(err.response.data.errors);
-            });
-    };
 
     const logout = (e) => {
         axios.post(`http://localhost:8000/api/users/logout`, {},  
@@ -62,26 +75,29 @@ const CreatePlaylist = () => {
         <div>
             <div className="container">
                 <nav className="navbar navbar-expand-sm navbar-light bg-light my-3">
+                    
                     <form className="container-fluid justify-content-end">
                         <button className="btn btn-outline-success me-2" type="button" onClick={() => navigate(`/home`)}>Home</button>
-
+                        <button className="btn btn-outline-success me-2" type="button" onClick = {() => navigate (`/new`)}>Add New Playlist</button>
                         <button className="btn  btn-outline-success" type="button" onClick={logout}>Logout</button>
+
                     </form>
                 </nav>
             </div>
+
 
             <div className=" container-sm mx-auto">
 
                 <div className="row ">
                     <div>
-                        <h1 className=" my-3 mb-5"> Add a New Playlist</h1>
+                        <h1 className=" my-3 mb-5"> Edit Playlist</h1>
                     </div>
                 </div>
 
                 <div className="col-6 mx-auto">
 
 
-                    <form onSubmit={handleAddPlaylist} >
+                    <form onSubmit={handleEditPlaylist} >
 
 
                                 <div className="form-group">
@@ -101,7 +117,7 @@ const CreatePlaylist = () => {
 
 
                                 <div className="form-group">
-                                <label htmlFor="genre">Genre: </label>
+                                    <label htmlFor="genre">Genre: </label>
 
                                     <select class="form-select" aria-label="Default select example" id="genre"  onChange={(e) => setGenre(e.target.value)}>
                                     
@@ -128,14 +144,13 @@ const CreatePlaylist = () => {
                                 {errors.genre ? (<p style={{ color: "red" }}>{errors.genre.message}</p>
                                 ) : null}
 
-                                <button className="btn btn-primary mt-3" type="submit">Add Playlist</button>
+                                
+                                <button className="btn btn-primary mt-3" type="submit">Edit Playlist</button>
 
                     </form>
 
                 </div>
-
-
-                            
+        
             </div>
         </div>     
 
@@ -143,5 +158,23 @@ const CreatePlaylist = () => {
     );
 };
 
-export default CreatePlaylist;
+export default EditPlaylist;
+
+
+
+/*
+
+<div> {songList.map((song, index) => {
+                                        return (
+                                            <div key={index}>
+
+                                            <p>{song.name}</p>
+                                        
+                                            </div>
+                                        )})}
+
+                                </div>
+
+
+                                */
 
