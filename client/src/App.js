@@ -1,9 +1,10 @@
 import './App.css';
 import AllPlaylists from "./components/AllPlaylists";
 import NewPlaylist from "./components/NewPlaylist";
-//import OnePlaylist from "./components/OnePlaylist";
+import OnePlaylist from "./components/OnePlaylist";
 import EditPlaylist from "./components/EditPlaylist";
 import LoginReg from "./views/LoginReg";
+//import AddSong from "./components/AddSong";
 
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 
@@ -23,6 +24,10 @@ function App() {
         <Route element = {<AllPlaylists />} path= "/home" />
         <Route element = {<NewPlaylist />} path= "/new" />
         <Route element = {<EditPlaylist />} path= "/playlist/edit/:id" />
+        <Route element = {<OnePlaylist />} path= "/playlist/:id" />
+        
+
+
 
 
 
