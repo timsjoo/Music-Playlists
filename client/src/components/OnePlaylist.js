@@ -83,8 +83,8 @@ const OnePlaylist = (props) => {
                 </nav>
             </div>
 
-
-            <div className=" container-sm col-6 mx-auto bg-secondary pb-5 px-4">
+            
+            <div className="  container col-6 mx-auto bg-secondary pb-5 px-4">
 
                 <div className="row">
                     <div>
@@ -93,7 +93,7 @@ const OnePlaylist = (props) => {
                 </div>
 
 
-                <div class="card border-dark col-8 mx-auto mb-3 ">
+                <div className="card border-dark col-8 mx-auto mb-3 ">
 
                     <div className="row ">
 
@@ -102,7 +102,7 @@ const OnePlaylist = (props) => {
                             <p className="card-title  fs-5 mt-3 "> {onePlaylist.genre}</p>
                             <p className="card-title  fs-5 mt-3 "> {onePlaylist.description}</p>
 
-                            <div> List of songs here:{songList.map((song, index) => {
+                            <div className="pb-3"> List of songs here:{songList.map((song, index) => {
                                 return (
                                     <div key={index}>
 
@@ -119,15 +119,15 @@ const OnePlaylist = (props) => {
                     </div>
 
                 </div>
-                <div className="row">
+                <div className="row ">
                     <div>
-                    <button className="btn btn-success me-2 mb-2" type="button" onClick={() => navigate(`/playlist/${onePlaylist._id}/addsong`)}>Add Songs</button>
+                    <button className="btn btn-primary me-2 my-2" type="button" onClick={() => navigate(`/playlist/${onePlaylist._id}/addsong`)}>Add Songs</button>
                     </div>
                 </div>
                 <div className="row">
                     <div>
-                    <button className="btn btn-success me-2" type="button" onClick={() => navigate(`/playlist/edit/${onePlaylist._id}`)}>Edit</button>
-                    <button className="btn  btn-danger" type="button" onClick={deletePlaylistHandler}>Delete</button>
+                    <button className="btn btn-sm btn-primary me-2" type="button" onClick={() => navigate(`/playlist/edit/${onePlaylist._id}`)}>Edit</button>
+                    <button className="btn  btn-sm btn-danger" type="button" onClick={deletePlaylistHandler}>Delete</button>
                     
                     </div>
                 </div>
