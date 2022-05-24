@@ -1,4 +1,4 @@
-const SpotifyController = require('../controllers/spotify.controllers');
+const SpotifyController = require('../controllers/spotify.controller');
 
 module.exports = app => {
   app.get("/songs/:query", SpotifyController.getSongsByKeyword);
