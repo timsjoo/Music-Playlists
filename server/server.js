@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 require('./config/mongoose.config'); 
 require('./routes/user.route')(app);
 require('./routes/playlist.route')(app);
+require('./routes/spotify.route')(app);
 
 
 const port = process.env.SERVER_PORT;
