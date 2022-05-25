@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const CreatePlaylist = () => {
@@ -12,6 +12,21 @@ const CreatePlaylist = () => {
 
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
+
+    useEffect(() => {
+        axios
+          .get(
+            `http://localhost:8000/api/users`, // Get LoggedInUser
+            { withCredentials: true }
+          )
+          .then((res) => {
+            console.log(res.data);
+            setUser(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, []);
 
 
     const handleAddPlaylist = (e) => {
@@ -60,15 +75,31 @@ const CreatePlaylist = () => {
 
 
         <div>
-            <div className="container">
-                <nav className="navbar navbar-expand-sm navbar-light bg-light my-3">
-                    <form className="container-fluid justify-content-end">
-                        <button className="btn btn-outline-success me-2" type="button" onClick={() => navigate(`/home`)}>Home</button>
-
-                        <button className="btn  btn-outline-success" type="button" onClick={logout}>Logout</button>
-                    </form>
-                </nav>
-            </div>
+            <nav className='navbar navbar-expand-sm navbar-light bg-dark shadow-lg p-3 mb-5 rounded-bottom'>
+                <img src="https://img.icons8.com/fluency/96/000000/spotify.png" alt="spotifylogo" className="img ms-5 m-3 bg-dark"></img>
+                    <div className='collapse navbar-collapse justify-content-between' id='navbarNav'>
+                        <h2 className="bg-white border border-dark rounded px-3 py-2 text-success mr-5">Playlistify</h2>
+                            <ul className='navbar-nav'>
+                                <li className='nav-item active mx-5'>
+                                    <button className="btn btn-success me-2" type="button" onClick = {() => navigate (`/home`)}>Dashboard</button>
+                                </li>
+                                <div className="btn-group me-5" role="group">
+                                    <button id="btnGroupDrop1" 
+                                            type="button" 
+                                            className="btn btn-light text-success me-2 dropdown-toggle" 
+                                            data-bs-toggle="dropdown" 
+                                            aria-haspopup="true" 
+                                            aria-expanded="false">
+                                    {user.username}
+                                    </button>
+                                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <Link to={"#"} className="dropdown-item">Account Info</Link>
+                                    <button className="btn dropdown-item" type="button" onClick = {logout}>Logout</button>
+                                    </div>
+                                </div>
+                            </ul>
+                    </div>
+            </nav>
 
             <div className=" container-sm mx-auto">
 
@@ -84,28 +115,28 @@ const CreatePlaylist = () => {
                     <form onSubmit={handleAddPlaylist} >
 
 
-                                <div className="form-group">
-                                    <label htmlFor="name">Name: </label>
+                                <div className="form-group mt-3">
+                                    <label htmlFor="name"><strong>Name:</strong></label>
                                     <input type="text" id="name" value={name} className="form-control" onChange={(e) => setName(e.target.value)} />
                                 </div>
 
                                 {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
 
 
-                                <div className="form-group">
-                                    <label htmlFor="description">Description: </label>
+                                <div className="form-group mt-3">
+                                    <label htmlFor="description"><strong>Description:</strong></label>
                                     <input type="text" id="description" value={description} className="form-control" onChange={(e) => setDescription(e.target.value)} />
                                 </div>
 
                                 {errors.description && (<p style={{ color: "red" }}>{errors.description.message}</p>)}
 
 
-                                <div className="form-group">
-                                <label htmlFor="genre">Genre: </label>
+                                <div className="form-group mt-3">
+                                <label htmlFor="genre"><strong>Genre:</strong></label>
 
                                     <select class="form-select" aria-label="Default select example" id="genre"  onChange={(e) => setGenre(e.target.value)}>
                                     
-                                        <option selected>Select genre</option>
+                                        <option selected>Choose a genre!</option>
                                         <option value="Rock">Rock</option>
                                         <option value="Jazz">Jazz</option>
 
@@ -128,7 +159,7 @@ const CreatePlaylist = () => {
                                 {errors.genre ? (<p style={{ color: "red" }}>{errors.genre.message}</p>
                                 ) : null}
 
-                                <button className="btn btn-primary mt-3" type="submit">Add Playlist</button>
+                                <button className="btn btn-outline-success mt-3" type="submit">Add Playlist</button>
 
                     </form>
 
