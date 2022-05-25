@@ -4,7 +4,6 @@ import NewPlaylist from "./components/NewPlaylist";
 import OnePlaylist from "./components/OnePlaylist";
 import EditPlaylist from "./components/EditPlaylist";
 import LoginReg from "./views/LoginReg";
-//import AddSong from "./components/AddSong";
 
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 

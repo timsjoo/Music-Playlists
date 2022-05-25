@@ -71,31 +71,43 @@ const AllPlaylists = (props) => {
 
   return (
     <div>
-      <nav className='navbar navbar-expand-sm navbar-light bg-dark shadow-lg p-3 mb-5 rounded-bottom'>
-                <img src="https://img.icons8.com/fluency/96/000000/spotify.png" alt="spotifylogo" className="img ms-5 m-3 bg-dark"></img>
-                    <div className='collapse navbar-collapse justify-content-between' id='navbarNav'>
-                        <h2 className="bg-white border border-dark rounded px-3 py-2 text-success mr-5">Playlistify</h2>
-                            <ul className='navbar-nav'>
-                                <li className='nav-item active mx-5'>
-                                    <button className="btn btn-success me-2" type="button" onClick = {() => navigate (`/new`)}>Add Playlist</button>
-                                </li>
-                                <div className="btn-group me-5" role="group">
-                                  <button id="btnGroupDrop1" 
-                                          type="button" 
-                                          className="btn btn-light text-success me-2 dropdown-toggle" 
-                                          data-bs-toggle="dropdown" 
-                                          aria-haspopup="true" 
-                                          aria-expanded="false">
-                                    {user.username}
-                                  </button>
-                                  <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <Link to={"#"} className="dropdown-item">Account Info</Link>
-                                    <button className="btn dropdown-item" type="button" onClick = {logout}>Logout</button>
-                                  </div>
-                                </div>
-                            </ul>
-                    </div>
-            </nav>
+      <nav className="navbar navbar-expand-sm navbar-light bg-dark shadow-lg p-3 mb-5 rounded-bottom">
+        <img
+          src="https://img.icons8.com/fluency/96/000000/spotify.png"
+          alt="spotifylogo"
+          className="img ms-5 m-3 bg-dark"
+        ></img>
+        <div className="collapse navbar-collapse justify-content-between" id="navbarNav">
+          <h2 className="bg-white border border-dark rounded px-3 py-2 text-success mr-5">Playlistify</h2>
+          <ul className="navbar-nav">
+            <li className="nav-item active mx-5">
+              <button className="btn btn-success me-2" type="button" onClick={() => navigate(`/new`)}>
+                Add Playlist
+              </button>
+            </li>
+            <div className="btn-group me-5" role="group">
+              <button
+                id="btnGroupDrop1"
+                type="button"
+                className="btn btn-light text-success me-2 dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {user.username}
+              </button>
+              <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <Link to={"#"} className="dropdown-item">
+                  Account Info
+                </Link>
+                <button className="btn dropdown-item" type="button" onClick={logout}>
+                  Logout
+                </button>
+              </div>
+            </div>
+          </ul>
+        </div>
+      </nav>
       <div className="container">
         <div className="row">
           <div>
@@ -120,7 +132,9 @@ const AllPlaylists = (props) => {
               return (
                 <tr key={index}>
                   <td>
-                    <Link to={`/playlist/${playlist._id}`} className='text-decoration-none link-success'><strong>{playlist.name}</strong></Link>
+                    <Link to={`/playlist/${playlist._id}`} className="text-decoration-none link-success">
+                      <strong>{playlist.name}</strong>
+                    </Link>
                   </td>
                   <td>{playlist.genre}</td>
                   <td>{playlist.description}</td>
@@ -131,14 +145,6 @@ const AllPlaylists = (props) => {
                   <td>
                     {playlist.createdBy._id === user._id && (
                       <div className="btn-group my-1">
-                        <button
-                          className="btn btn-success me-2"
-                          type="button"
-                          onClick={() => navigate(`/playlist/${playlist._id}`)}
-                        >
-                          Add Songs
-                        </button>
-
                         <button
                           className="btn btn-success me-2"
                           type="button"

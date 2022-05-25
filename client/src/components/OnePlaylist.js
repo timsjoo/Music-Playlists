@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import AddSongs from "./AddSongs";
+import { Link } from "react-router-dom";
 
 const OnePlaylist = (props) => {
   const { id } = useParams();
 
   const navigate = useNavigate();
   const [onePlaylist, setOnePlaylist] = useState({});
-  const [user, setUser] = useState({}); /////////
+  const [user, setUser] = useState({});
   const [songList, setSongList] = useState([]);
 
   useEffect(() => {
@@ -17,11 +18,12 @@ const OnePlaylist = (props) => {
       .then((res) => {
         console.log(res.data);
         setOnePlaylist(res.data);
+        setSongList(res.data.songs);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [id]);
+  }, []);
 
   const deletePlaylistHandler = () => {
     axios
@@ -89,17 +91,18 @@ const OnePlaylist = (props) => {
 
         <div className="card border-dark col-8 mx-auto mb-3 ">
           <div className="row ">
-            <div className=" col-5 mx-auto">
+            <div className=" col-10 mx-auto">
               <p className="card-title  fs-5 mt-3 "> {onePlaylist.genre}</p>
               <p className="card-title  fs-5 mt-3 "> {onePlaylist.description}</p>
 
               <div className="pb-3">
                 {" "}
-                List of songs here:
                 {songList.map((song, index) => {
                   return (
                     <div key={index}>
-                      <p>{song.name}</p>
+                      <a href={song.external_urls.spotify} target="_blank">
+                        {song.name}
+                      </a>
                     </div>
                   );
                 })}
@@ -109,8 +112,7 @@ const OnePlaylist = (props) => {
         </div>
         {onePlaylist.createdBy === user._id && (
           <div>
-            <div className="row ">
-            </div>
+            <div className="row "></div>
             <div className="row">
               <div>
                 <button
@@ -125,14 +127,7 @@ const OnePlaylist = (props) => {
                 </button>
               </div>
               <div>
-                <button
-                  className="btn btn-primary me-2 my-2"
-                  type="button"
-                  onClick={() => navigate(`/playlist/${onePlaylist._id}/addsong`)}
-                >
-                  Add Songs
-                </button>
-                <AddSongs user={user} playlist={onePlaylist}/>
+                <AddSongs user={user} playlist={onePlaylist} setSongList={setSongList} />
               </div>
             </div>
           </div>
