@@ -22,7 +22,6 @@ const AddSongs = ({ user, playlist, setSongList }) => {
   }, [search]);
 
   const chooseTrack = (track) => {
-    debugger;
     axios
       .put(`http://localhost:8000/api/playlists/${playlist._id}`, {
         songs: [...playlist.songs, track],
