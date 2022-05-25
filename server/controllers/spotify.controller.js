@@ -24,7 +24,7 @@ module.exports = {
   },
 
   getSongById: async (req, res) => {
-    (await spotifyApi.clientCredentialsGrant(code)
+    (await spotifyApi.clientCredentialsGrant(accessToken)
       .then((data) => {
         spotifyApi.setAccessToken(data.body.access_token);
         return spotifyApi.getTrack(req.params.songId);
