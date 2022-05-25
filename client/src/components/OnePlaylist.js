@@ -84,18 +84,33 @@ const OnePlaylist = (props) => {
 
   return (
     <div>
-      <div className="container">
-        <nav className="navbar navbar-expand-sm navbar-light bg-light my-3">
-          <form className="container-fluid justify-content-end">
-            <button className="btn btn-outline-success me-2" type="button" onClick={() => navigate(`/home`)}>
-              Home
-            </button>
-            <button className="btn  btn-outline-success me-2" type="button" onClick={logout}>
-              Logout
-            </button>
-          </form>
-        </nav>
-      </div>
+      
+        <nav className='navbar navbar-expand-sm navbar-light bg-dark shadow-lg p-3 mb-5 rounded-bottom'>
+                <img src="https://img.icons8.com/fluency/96/000000/spotify.png" alt="spotifylogo" className="img ms-5 m-3 bg-dark"></img>
+                    <div className='collapse navbar-collapse justify-content-between' id='navbarNav'>
+                        <h2 className="bg-white border border-dark rounded px-3 py-2 text-success mr-5">Playlistify</h2>
+                            <ul className='navbar-nav'>
+                                <li className='nav-item active mx-5'>
+                                    <button className="btn btn-success me-2" type="button" onClick = {() => navigate (`/home`)}>Dashboard</button>
+                                </li>
+                                <div className="btn-group me-5" role="group">
+                                    <button id="btnGroupDrop1" 
+                                            type="button" 
+                                            className="btn btn-light text-success me-2 dropdown-toggle" 
+                                            data-bs-toggle="dropdown" 
+                                            aria-haspopup="true" 
+                                            aria-expanded="false">
+                                    {user.username}
+                                    </button>
+                                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <Link to={"#"} className="dropdown-item">Account Info</Link>
+                                    <button className="btn dropdown-item" type="button" onClick = {logout}>Logout</button>
+                                    </div>
+                                </div>
+                            </ul>
+                    </div>
+            </nav>
+      
 
       <div className="  container col-6 mx-auto bg-secondary pb-5 px-4">
         <div className="row">
@@ -129,19 +144,19 @@ const OnePlaylist = (props) => {
           <div>
             <div className="row "></div>
             <div className="row">
-              <div>
+              <div className="mb-2">
                 <button
-                  className="btn btn-sm btn-primary me-2"
+                  className="btn  btn-success me-2"
                   type="button"
                   onClick={() => navigate(`/playlist/edit/${onePlaylist._id}`)}
                 >
                   Edit
                 </button>
-                <button className="btn  btn-sm btn-danger" type="button" onClick={deletePlaylistHandler}>
+                <button className="btn  btn-success" type="button" onClick={deletePlaylistHandler}>
                   Delete
                 </button>
               </div>
-              <div>
+              <div className="col-8 mx-auto">
                 <AddSongs user={user} playlist={onePlaylist} setSongList={setSongList} chooseTrack={chooseTrack} />
               </div>
             </div>
