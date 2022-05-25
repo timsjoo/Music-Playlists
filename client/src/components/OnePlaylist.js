@@ -25,6 +25,21 @@ const OnePlaylist = (props) => {
       });
   }, []);
 
+  const chooseTrack = (track) => {
+    axios
+      .put(`http://localhost:8000/api/playlists/${onePlaylist._id}`, {
+        songs: [...onePlaylist.songs, track],
+      })
+      .then((res) => {
+        console.log("Edit success ", res);
+        console.log(res.data.songs);
+        setSongList(res.data.songs);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const deletePlaylistHandler = () => {
     axios
       .delete(`http://localhost:8000/api/playlists/${id}`)
@@ -127,7 +142,7 @@ const OnePlaylist = (props) => {
                 </button>
               </div>
               <div>
-                <AddSongs user={user} playlist={onePlaylist} setSongList={setSongList} />
+                <AddSongs user={user} playlist={onePlaylist} setSongList={setSongList} chooseTrack={chooseTrack} />
               </div>
             </div>
           </div>
