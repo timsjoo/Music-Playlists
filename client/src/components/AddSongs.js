@@ -3,7 +3,7 @@ import axios from "axios";
 import { Form, FormControl } from "react-bootstrap";
 import TrackSearchResult from "./TrackSearchResult";
 
-const AddSongs = ({ user, playlist, setSongList }) => {
+const AddSongs = ({ user, playlist, setSongList, chooseTrack }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResult] = useState([]);
 
@@ -20,22 +20,6 @@ const AddSongs = ({ user, playlist, setSongList }) => {
       .catch((err) => console.log(err));
     return () => (cancel = true);
   }, [search]);
-
-  const chooseTrack = (track) => {
-    axios
-      .put(`http://localhost:8000/api/playlists/${playlist._id}`, {
-        songs: [...playlist.songs, track],
-      })
-      .then((res) => {
-        console.log("Edit success ", res);
-        console.log(res.data.songs);
-        setSongList(res.data.songs);
-        setSearch("");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   console.log(playlist);
 
