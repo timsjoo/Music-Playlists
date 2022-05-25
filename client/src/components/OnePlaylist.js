@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
+import AddSongs from "./AddSongs";
 
 const OnePlaylist = (props) => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ const OnePlaylist = (props) => {
     axios
       .get(`http://localhost:8000/api/playlists/${id}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setOnePlaylist(res.data);
       })
       .catch((err) => {
@@ -26,8 +27,8 @@ const OnePlaylist = (props) => {
     axios
       .delete(`http://localhost:8000/api/playlists/${id}`)
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
+        //console.log(res);
+        // console.log(res.data);
 
         navigate("/home");
       })
@@ -40,8 +41,8 @@ const OnePlaylist = (props) => {
     axios
       .post(`http://localhost:8000/api/users/logout`, {}, { withCredentials: true })
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
+        //console.log(res);
+        // console.log(res.data);
         navigate("/");
       })
       .catch((err) => {
@@ -64,6 +65,7 @@ const OnePlaylist = (props) => {
       });
   }, []);
 
+  console.log(onePlaylist)
   return (
     <div>
       <div className="container">
@@ -109,15 +111,6 @@ const OnePlaylist = (props) => {
         {onePlaylist.createdBy === user._id && (
           <div>
             <div className="row ">
-              <div>
-                <button
-                  className="btn btn-primary me-2 my-2"
-                  type="button"
-                  onClick={() => navigate(`/playlist/${onePlaylist._id}/addsong`)}
-                >
-                  Add Songs
-                </button>
-              </div>
             </div>
             <div className="row">
               <div>
@@ -131,6 +124,16 @@ const OnePlaylist = (props) => {
                 <button className="btn  btn-sm btn-danger" type="button" onClick={deletePlaylistHandler}>
                   Delete
                 </button>
+              </div>
+              <div>
+                <button
+                  className="btn btn-primary me-2 my-2"
+                  type="button"
+                  onClick={() => navigate(`/playlist/${onePlaylist._id}/addsong`)}
+                >
+                  Add Songs
+                </button>
+                <AddSongs user={user} playlist={onePlaylist}/>
               </div>
             </div>
           </div>

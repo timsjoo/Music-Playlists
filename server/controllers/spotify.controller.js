@@ -1,7 +1,6 @@
 const SpotifyWebApi = require('spotify-web-api-node');
 
 const spotifyApi = new SpotifyWebApi({
-  redirectUri: 'http://localhost:3000',
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET
 })
@@ -24,7 +23,7 @@ module.exports = {
   },
 
   getSongById: async (req, res) => {
-    (await spotifyApi.clientCredentialsGrant(code)
+    (await spotifyApi.clientCredentialsGrant(accessToken)
       .then((data) => {
         spotifyApi.setAccessToken(data.body.access_token);
         return spotifyApi.getTrack(req.params.songId);
