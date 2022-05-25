@@ -44,7 +44,7 @@ const Login = (props) => {
 
             <form onSubmit={login}>
 
-                <div className="mb-3">
+                <div className="form-group mt-3">
                     <label  className="form-label" >Email</label>
                     <input
                         type = "text"
@@ -55,7 +55,7 @@ const Login = (props) => {
                     />
                 </div>
 
-                <div className="mb-3">
+                <div className="form-group mt-3">
                     <label>Password</label>
                     <input
                         type = "password"
@@ -66,9 +66,7 @@ const Login = (props) => {
                     />
                 </div>
 
-                <div className="center">
-                    <button className="btn  btn-outline-success"> Login</button>
-                </div>
+                    <button className="btn  btn-outline-success mt-3"> Login</button>
             </form>
         </div>
     );

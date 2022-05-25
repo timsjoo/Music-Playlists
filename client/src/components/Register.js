@@ -61,7 +61,7 @@ const Register = (props) => {
 
             <form onSubmit={register}>
 
-            <div className="mb-3">
+            <div className="form-group mt-3">
                 <label htmlFor="username" className="form-label">Username:</label>
                 {errors.username ? (
                         <span className="error-text" >
@@ -72,7 +72,7 @@ const Register = (props) => {
             </div>
 
 
-            <div className="mb-3">
+            <div className="form-group mt-3">
                     <label htmlFor="email" className="form-label">Email:</label>
                     {errors.email ? (
                         <span className="error-text">{errors.email.message}</span>
@@ -81,7 +81,7 @@ const Register = (props) => {
             </div>
 
 
-            <div className="mb-3">
+            <div className="form-group mt-3">
                     <label htmlFor="password" className="form-label">Password:</label>
                     {errors.password ? (
                         <span className="error-text">
@@ -92,7 +92,7 @@ const Register = (props) => {
             </div>
 
 
-            <div className="mb-3">
+            <div className="form-group mt-3">
                     <label htmlFor="confirmPassword" className="form-label">Confirm Password:</label>
                     {errors.confirmPassword ? (
                         <span className="error-text">
@@ -102,9 +102,8 @@ const Register = (props) => {
                     <input type="password" name="confirmPassword" value={user.confirmPassword} onChange={handleChange} className="form-control" />
             </div>
 
-            <div className="center">
-                <button className="btn  btn-outline-success" >Register</button>
-            </div>
+                <button className="btn  btn-outline-success mt-3" >Register</button>
+
 
             </form>
 
