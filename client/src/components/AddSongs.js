@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, FormControl } from "react-bootstrap";
 import TrackSearchResult from "./TrackSearchResult";
 
 const AddSongs = ({ user, playlist, setSongList, chooseTrack }) => {
@@ -21,12 +20,12 @@ const AddSongs = ({ user, playlist, setSongList, chooseTrack }) => {
     return () => (cancel = true);
   }, [search]);
 
-  console.log(playlist);
+  // console.log(playlist);
 
   return (
     <>
       <form onChange={(e) => setSearch(e.target.value)} className="d-flex flex-column py-2">
-        <input type="search" placeholder="Search Songs/Artists" value={search}></input>
+        <input type="search" placeholder="Search Songs/Artists" defaultValue={search}></input>
       </form>
       <div className="flex-grow-1 my-2" style={{ overFlowY: "auto" }}>
         {searchResults.map((track) => (
