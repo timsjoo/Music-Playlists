@@ -159,7 +159,7 @@ const OnePlaylist = (props) => {
                       <a href={song.external_urls.spotify} target="_blank">
                         {song.name}
                       </a>
-                      <button onClick={() => deleteSongHandler(song)}>delete</button>
+                      <button onClick={() => deleteSongHandler(song)}>Delete</button>
                     </div>
                   );
                 })}
