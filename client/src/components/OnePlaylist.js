@@ -12,6 +12,7 @@ const OnePlaylist = (props) => {
   const [user, setUser] = useState({});
   const [songList, setSongList] = useState([]);
 
+  
   const getPlaylist =() => {
     axios
       .get(`http://localhost:8000/api/playlists/${id}`)
@@ -26,7 +27,7 @@ const OnePlaylist = (props) => {
   };
 
   useEffect(() => {
-    getPlaylist()
+    getPlaylist();
   }, [])
 
   const chooseTrack = (track) => {
@@ -72,6 +73,25 @@ const OnePlaylist = (props) => {
         console.log(err);
       });
   };
+
+  const deleteSongHandler = (song) => {
+    const newSongList = songList
+    for(let i = 0; i<songList.length; i++) {
+      if (song.id === newSongList[i].id) {
+        newSongList.splice(i,1)
+        setSongList(newSongList)
+        //console.log(songList)
+        // console.log(onePlaylist.songs)
+      }
+    }
+    axios
+      .put(`http://localhost:8000/api/playlists/${onePlaylist._id}`, {songs: songList})
+      .then((res) => {
+        console.log(res)
+        getPlaylist();
+      })
+      .catch((err) => console.log(err))
+  }
 
   useEffect(() => {
     axios
@@ -139,6 +159,7 @@ const OnePlaylist = (props) => {
                       <a href={song.external_urls.spotify} target="_blank">
                         {song.name}
                       </a>
+                      <button onClick={() => deleteSongHandler(song)}>delete</button>
                     </div>
                   );
                 })}
