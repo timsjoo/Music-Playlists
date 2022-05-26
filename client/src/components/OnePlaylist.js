@@ -12,7 +12,7 @@ const OnePlaylist = (props) => {
   const [user, setUser] = useState({});
   const [songList, setSongList] = useState([]);
 
-  const getPlaylist =() => {
+  const getPlaylist = () => {
     axios
       .get(`http://localhost:8000/api/playlists/${id}`)
       .then((res) => {
@@ -26,8 +26,8 @@ const OnePlaylist = (props) => {
   };
 
   useEffect(() => {
-    getPlaylist()
-  }, [])
+    getPlaylist();
+  }, []);
 
   const chooseTrack = (track) => {
     axios
@@ -57,6 +57,23 @@ const OnePlaylist = (props) => {
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+
+  const handleDeleteSong = (songIdx) => {
+    const filteredList = songList.filter((song, idx) => idx !== songIdx);
+    setSongList(filteredList);
+
+    axios
+      .put(`http://localhost:8000/api/playlists/${id}`, {
+        songs: filteredList,
+      })
+      .then((res) => {
+        console.log("Successful song delete", res);
+        getPlaylist();
+      })
+      .catch((err) => {
+        console.log("error deleting song", err);
       });
   };
 
@@ -90,33 +107,43 @@ const OnePlaylist = (props) => {
 
   return (
     <div>
-      
-        <nav className='navbar navbar-expand-sm navbar-light bg-dark shadow-lg p-3 mb-5 rounded-bottom'>
-                <img src="https://img.icons8.com/fluency/96/000000/spotify.png" alt="spotifylogo" className="img ms-5 m-3 bg-dark"></img>
-                    <div className='collapse navbar-collapse justify-content-between' id='navbarNav'>
-                        <h2 className="bg-white border border-dark rounded px-3 py-2 text-success mr-5">Playlistify</h2>
-                            <ul className='navbar-nav'>
-                                <li className='nav-item active mx-5'>
-                                    <button className="btn btn-success me-2" type="button" onClick = {() => navigate (`/home`)}>Dashboard</button>
-                                </li>
-                                <div className="btn-group me-5" role="group">
-                                    <button id="btnGroupDrop1" 
-                                            type="button" 
-                                            className="btn btn-light text-success me-2 dropdown-toggle" 
-                                            data-bs-toggle="dropdown" 
-                                            aria-haspopup="true" 
-                                            aria-expanded="false">
-                                    {user.username}
-                                    </button>
-                                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <Link to={"#"} className="dropdown-item">Account Info</Link>
-                                    <button className="btn dropdown-item" type="button" onClick = {logout}>Logout</button>
-                                    </div>
-                                </div>
-                            </ul>
-                    </div>
-            </nav>
-      
+      <nav className="navbar navbar-expand-sm navbar-light bg-dark shadow-lg p-3 mb-5 rounded-bottom">
+        <img
+          src="https://img.icons8.com/fluency/96/000000/spotify.png"
+          alt="spotifylogo"
+          className="img ms-5 m-3 bg-dark"
+        ></img>
+        <div className="collapse navbar-collapse justify-content-between" id="navbarNav">
+          <h2 className="bg-white border border-dark rounded px-3 py-2 text-success mr-5">Playlistify</h2>
+          <ul className="navbar-nav">
+            <li className="nav-item active mx-5">
+              <button className="btn btn-success me-2" type="button" onClick={() => navigate(`/home`)}>
+                Dashboard
+              </button>
+            </li>
+            <div className="btn-group me-5" role="group">
+              <button
+                id="btnGroupDrop1"
+                type="button"
+                className="btn btn-light text-success me-2 dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {user.username}
+              </button>
+              <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <Link to={"#"} className="dropdown-item">
+                  Account Info
+                </Link>
+                <button className="btn dropdown-item" type="button" onClick={logout}>
+                  Logout
+                </button>
+              </div>
+            </div>
+          </ul>
+        </div>
+      </nav>
 
       <div className="  container col-6 mx-auto bg-secondary pb-5 px-4">
         <div className="row">
@@ -127,22 +154,32 @@ const OnePlaylist = (props) => {
 
         <div className="card border-dark col-8 mx-auto mb-3 ">
           <div className="row ">
-            <div className=" col-10 mx-auto">
+            <div className=" col-15 mx-auto">
               <p className="card-title  fs-5 mt-3 "> {onePlaylist.genre}</p>
               <p className="card-title  fs-5 mt-3 "> {onePlaylist.description}</p>
 
-              <div className="pb-3">
-                {" "}
-                {songList.map((song, index) => {
-                  return (
-                    <div key={index}>
-                      <a href={song.external_urls.spotify} target="_blank">
-                        {song.name}
-                      </a>
-                    </div>
-                  );
-                })}
-              </div>
+              <table className="table">
+                <tbody>
+                  {songList.map((song, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>
+                          <a href={song.external_urls.spotify} target="_blank">
+                            {song.name}
+                          </a>
+                        </td>
+                        <td>
+                          {onePlaylist.createdBy === user._id && (
+                            <button type="button" className="btn btn-danger" onClick={() => handleDeleteSong(index)}>
+                              Delete
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
