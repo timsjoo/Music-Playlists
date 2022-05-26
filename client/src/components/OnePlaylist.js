@@ -12,7 +12,7 @@ const OnePlaylist = (props) => {
   const [user, setUser] = useState({});
   const [songList, setSongList] = useState([]);
 
-  useEffect(() => {
+  const getPlaylist =() => {
     axios
       .get(`http://localhost:8000/api/playlists/${id}`)
       .then((res) => {
@@ -23,7 +23,11 @@ const OnePlaylist = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    getPlaylist()
+  }, [])
 
   const chooseTrack = (track) => {
     axios
@@ -33,7 +37,9 @@ const OnePlaylist = (props) => {
       .then((res) => {
         console.log("Edit success ", res);
         console.log(res.data.songs);
-        setSongList(res.data.songs);
+        // window.location.reload();
+        // setSongList(res.data.songs);
+        getPlaylist();
       })
       .catch((err) => {
         console.log(err);
